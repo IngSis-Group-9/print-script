@@ -9,16 +9,19 @@ import sca.StaticCodeAnalyzerRules
 import sca.StaticCodeIssue
 import token.Position
 
-class ConditionalAnalyzer: StaticCodeAnalyzer {
+class ConditionalAnalyzer : StaticCodeAnalyzer {
     private val declarationAssignation = DeclarationAssignationAnalyzer()
     private val methodAnalyzer = MethodAnalyzer()
 
-    override fun analyzeNode(astNode: ASTNode, rules: StaticCodeAnalyzerRules): List<StaticCodeIssue> {
+    override fun analyzeNode(
+        astNode: ASTNode,
+        rules: StaticCodeAnalyzerRules,
+    ): List<StaticCodeIssue> {
         val conditionalNode = astNode as Conditional
         val issues = mutableListOf<StaticCodeIssue>()
 
         if (conditionalNode.condition !is IdentifierOperator) {
-            issues.add(StaticCodeIssue("The condition must be an identifier", Position(1,1)))
+            issues.add(StaticCodeIssue("The condition must be an identifier", Position(1, 1)))
         }
 
         conditionalNode.then.forEach {

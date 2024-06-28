@@ -44,7 +44,7 @@ class ExecuteSca(private val scaList: Map<KClass<out ASTNode>, StaticCodeAnalyze
                     Declaration::class to SimpleAssignationAnalyzer(),
                     SimpleAssignation::class to SimpleAssignationAnalyzer(),
                     Method::class to MethodAnalyzer(),
-                    Conditional::class to ConditionalAnalyzer()
+                    Conditional::class to ConditionalAnalyzer(),
                 ),
             )
         }

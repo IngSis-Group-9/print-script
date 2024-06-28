@@ -5,7 +5,6 @@ import ast.BinaryOperation
 import ast.BooleanOperator
 import ast.DeclarationAssignation
 import ast.NumberOperator
-import ast.SimpleAssignation
 import ast.StringOperator
 import sca.StaticCodeAnalyzerRules
 import sca.StaticCodeIssue
