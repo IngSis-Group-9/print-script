@@ -1,0 +1,8 @@
+let a: string;
+let b: boolean = true;
+let c: number = 1;
+println(a + 5);
+println(c + 5);
+println(b);
+b = false;
+println(b);

@@ -1,9 +1,18 @@
 let a: string;
 let b: boolean = true;
-if (a) {
+if (b) {
+    let d: string;
+    a = "Hello";
+} else {
+    let d: string = "aaa";
+    a = "World";
+}
+let c: number = 1;
+println(a);
+b = false;
+if (b) {
     a = "Hello";
 } else {
     a = "World";
 }
-let c: number = 1;
 println(a);
