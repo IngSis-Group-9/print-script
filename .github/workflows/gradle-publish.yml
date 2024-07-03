@@ -5,36 +5,6 @@ on:
         branches:
             - release
 
-#jobs:
-#    build:
-#        runs-on: ubuntu-latest
-#        permissions:
-#            contents: read
-#            packages: write
-#
-#        steps:
-#            - uses: actions/checkout@v4
-#
-#            - name: Set up JDK 17
-#              uses: actions/setup-java@v4
-#              with:
-#                java-version: '17'
-#                distribution: 'corretto'
-#
-#            - name: Setup Gradle
-#              uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-#
-#            - name: Build with Gradle Wrapper
-#              run: ./gradlew build
-#
-#            - name: Publish to GitHub Packages
-#              uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
-#              with:
-#                  arguments: publish
-#              env:
-#                  GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-#                  GITHUB_TOKEN: ${{ secrets.PRINTSCRIPT_TOKEN }}
-
 jobs:
     publish:
         runs-on: ubuntu-latest

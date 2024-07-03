@@ -23,16 +23,20 @@ class ExecuteInterpreter(private val interpreters: Map<Class<out ASTNode>, Inter
     fun interpretAST(astList: List<ASTNode>): InterpreterResponse {
         val stringBuffer = StringBuffer()
         for (ast in astList) {
-            val interpreter = interpreters[ast::class.java] as Interpreter<ASTNode>
+            try {
+                val interpreter = interpreters[ast::class.java] as Interpreter<ASTNode>
 
-            when (val response = interpreter.interpret(ast, variableManager)) {
-                is SuccessResponse -> {
-                    response.message?.let { stringBuffer.append(it) }
-                    continue
+                when (val response = interpreter.interpret(ast, variableManager)) {
+                    is SuccessResponse -> {
+                        response.message?.let { stringBuffer.append(it) }
+                        continue
+                    }
+                    is ErrorResponse -> {
+                        return response
+                    }
                 }
-                is ErrorResponse -> {
-                    return response
-                }
+            } catch (e: Exception) {
+                return ErrorResponse("Invalid type of ASTNode: ${ast::class.java.simpleName}")
             }
         }
         return SuccessResponse(stringBuffer.takeIf { it.isNotEmpty() }?.toString())
@@ -67,7 +71,6 @@ class ExecuteInterpreter(private val interpreters: Map<Class<out ASTNode>, Inter
                             DeclarationAssignation::class.java to AssignationInterpreter(),
                             SimpleAssignation::class.java to AssignationInterpreter(),
                             Method::class.java to MethodInterpreter(),
-                            Conditional::class.java to ConditionalInterpreter(),
                         )
                 }
                 "1.1" -> {

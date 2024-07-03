@@ -11,7 +11,7 @@ import ast.SimpleAssignation
 import ast.StringOperator
 import formatter.ExecuteFormatter
 import formatter.FormatRules
-import formatter.FormatterFactory
+import formatter.formatters.DeclarationFormatter
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
@@ -38,7 +38,7 @@ class FormatterTests {
                 Method("println", IdentifierOperator("c")),
             )
 
-        val formattedAst = formatASTList(astList)
+        val formattedAst = formatASTList2(astList)
 
         val expectedString =
             "let a : number = 5 * 5;\n" +
@@ -257,11 +257,61 @@ class FormatterTests {
         assertEquals(expectedString, formattedAst)
     }
 
+    @Test
+    fun `when spaceBeforeColon and spaceAfterColon are true, append`() {
+        val formatter = DeclarationFormatter()
+        val result = formatter.formatNode(Declaration("a", "number"), FormatRules("src/main/resources/format_rules.yaml"))
+        assertEquals("let a : number;\n", result)
+    }
+
+    @Test
+    fun `when spaceAfterColon is true, append`() {
+        val formatter = DeclarationFormatter()
+        val result = formatter.formatNode(Declaration("a", "number"), FormatRules("src/main/resources/format_rules_2.yaml"))
+        assertEquals("let a: number;\n", result)
+    }
+
+    @Test
+    fun `when spaceBeforeColon is true, append`() {
+        val formatter = DeclarationFormatter()
+        val result = formatter.formatNode(Declaration("a", "number"), FormatRules("src/main/resources/format_rules_3.yaml"))
+        assertEquals("let a :number;\n", result)
+    }
+
+    @Test
+    fun `when neither spaceBeforeColon nor spaceAfterColon are true, append`() {
+        val formatter = DeclarationFormatter()
+        val result = formatter.formatNode(Declaration("a", "number"), FormatRules("src/main/resources/format_rules_4.yaml"))
+        assertEquals("let a:number;\n", result)
+    }
+
+    @Test
+    fun `when astNode is Conditional and version is not 1_1, return empty string`() {
+        val executeFormatter = ExecuteFormatter("1.0", mapOf())
+        val conditionalNode =
+            Conditional(
+                BooleanOperator("true"),
+                listOf(Method("println", StringOperator("true"))),
+                listOf(Method("println", StringOperator("false"))),
+            )
+        val result = executeFormatter.formatNode(conditionalNode, FormatRules("src/main/resources/format_rules.yaml"))
+        assertEquals("", result)
+    }
+
     private fun formatASTList(astList: List<ASTNode>): String {
         val executeFormatter = ExecuteFormatter.getDefaultFormatter()
         var formattedAst = ""
         for (ast in astList) {
-            formattedAst += executeFormatter.formatNode(ast, FormatRules("src/main/resources/format_rules.yaml"), FormatterFactory().assignFormatters())
+            formattedAst += executeFormatter.formatNode(ast, FormatRules("src/main/resources/format_rules.yaml"))
+        }
+        return formattedAst
+    }
+
+    private fun formatASTList2(astList: List<ASTNode>): String {
+        val executeFormatter = ExecuteFormatter.getFormatterByVersion("1.0")
+        var formattedAst = ""
+        for (ast in astList) {
+            formattedAst += executeFormatter.formatNode(ast, FormatRules("src/main/resources/format_rules.yaml"))
         }
         return formattedAst
     }

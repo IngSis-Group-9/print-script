@@ -3,6 +3,7 @@ import lexer.TokenProvider
 import org.junit.jupiter.api.Test
 import token.Token
 import token.TokenType
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
 import kotlin.test.assertEquals
@@ -51,6 +52,29 @@ class TokenProviderTest {
         }
         assertTrue { expectedTokens.size == actualTokens.size }
         assertEquals(expectedTokens, actualTokens)
+    }
+
+    @Test
+    fun `test 006 - else statement from string`() {
+        val inputString =
+            """
+            if (true) {
+                println("Outer true branch");
+                if (false) {
+                    println("Inner true branch");
+                } else {
+                    println("Inner false branch");
+                }
+            } else {
+                println("Outer false branch");
+            }
+            """.trimIndent()
+
+        val tokenProvider = TokenProvider(ByteArrayInputStream(inputString.toByteArray()), Lexer.getDefaultLexer())
+        val tokens = tokenProvider.readStatement()
+        val expectedTokensString = "[IF_KEYWORD, LPAREN, BOOLEAN(true), RPAREN, LBRACE, NEW_LINE, PRINTLN_FUNCTION, LPAREN, STRING(Outer true branch), RPAREN, SEMICOLON, NEW_LINE, IF_KEYWORD, LPAREN, BOOLEAN(false), RPAREN, LBRACE, NEW_LINE, PRINTLN_FUNCTION, LPAREN, STRING(Inner true branch), RPAREN, SEMICOLON, NEW_LINE, RBRACE, ELSE_KEYWORD, LBRACE, NEW_LINE, PRINTLN_FUNCTION, LPAREN, STRING(Inner false branch), RPAREN, SEMICOLON, NEW_LINE, RBRACE, NEW_LINE, RBRACE, ELSE_KEYWORD, LBRACE, NEW_LINE, PRINTLN_FUNCTION, LPAREN, STRING(Outer false branch), RPAREN, SEMICOLON, NEW_LINE, RBRACE, NEW_LINE]"
+
+        assertEquals(expectedTokensString, listToString(tokens))
     }
 
     private fun listToString(tokens: List<Token>): String {

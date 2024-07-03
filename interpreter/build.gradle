@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     // Depende del Token y del AST
-    implementation project(":token")
     implementation project(":ast")
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'

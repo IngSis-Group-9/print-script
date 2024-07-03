@@ -1,6 +1,11 @@
 package lexer
 
-import SymbolTokenMaker
+import lexer.tokenMakers.IdentifierTokenMaker
+import lexer.tokenMakers.NewLineTokenMaker
+import lexer.tokenMakers.NumberTokenMaker
+import lexer.tokenMakers.StringTokenMaker
+import lexer.tokenMakers.SymbolTokenMaker
+import lexer.tokenMakers.TokenMaker
 import token.Token
 import token.TokenType
 
@@ -23,6 +28,7 @@ class Lexer(private val tokenMakers: Map<Char, TokenMaker>) {
                 continue
             }
 
+            // Get the token maker for the current character
             val tokenMaker = tokenMakers[currentChar]
             if (tokenMaker != null) {
                 val token = tokenMaker.makeToken(input, position, positionX, positionY)

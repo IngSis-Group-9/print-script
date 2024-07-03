@@ -1,6 +1,6 @@
 import lexer.Lexer
-import lexer.NewLineTokenMaker
 import lexer.TokenProvider
+import lexer.tokenMakers.NewLineTokenMaker
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull

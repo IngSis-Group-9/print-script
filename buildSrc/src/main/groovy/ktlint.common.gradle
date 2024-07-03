@@ -24,4 +24,3 @@ tasks.register('ktlintFormatter', JavaExec) {
 
 // Esto asegura que Ktlint se ejecute automáticamente durante la construcción del proyecto.
 build.dependsOn(ktlintCheck)
-build.dependsOn(ktlintFormatter)

@@ -2,7 +2,6 @@ package cli.commands
 
 import formatter.ExecuteFormatter
 import formatter.FormatRules
-import formatter.FormatterFactory
 import lexer.Lexer
 import lexer.TokenProvider
 import parser.Parser
@@ -19,7 +18,7 @@ class FormatCommand(private val file: File, private val configFilePath: String, 
 
         var formattedAst = ""
         for (ast in astList) {
-            formattedAst += formatter.formatNode(ast, FormatRules(configFilePath), FormatterFactory().assignFormatters())
+            formattedAst += formatter.formatNode(ast, FormatRules(configFilePath))
         }
 
         println(formattedAst)

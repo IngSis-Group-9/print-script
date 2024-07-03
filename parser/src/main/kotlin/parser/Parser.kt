@@ -9,6 +9,7 @@ import parser.builder.MethodASTBuilder
 import token.Token
 
 class Parser(private val astBuilders: List<ASTBuilder<ASTNode>>) {
+    // The list of tokens is of a single statement
     fun generateAST(tokens: List<Token>): ASTNode? {
         if (tokens.isNotEmpty()) {
             for (astBuilder in astBuilders) {

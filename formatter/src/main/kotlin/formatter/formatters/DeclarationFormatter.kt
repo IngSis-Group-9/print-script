@@ -3,13 +3,11 @@ package formatter.formatters
 import ast.ASTNode
 import ast.Declaration
 import formatter.FormatRules
-import kotlin.reflect.KClass
 
 class DeclarationFormatter : Formatter {
     override fun formatNode(
         astNode: ASTNode,
         rules: FormatRules,
-        formatterList: Map<KClass<out ASTNode>, Formatter>,
     ): String {
         val declaration = astNode as Declaration
         return buildString {

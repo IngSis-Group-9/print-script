@@ -1,4 +1,5 @@
-import lexer.TokenMaker
+package lexer.tokenMakers
+
 import token.Position
 import token.Token
 import token.TokenType

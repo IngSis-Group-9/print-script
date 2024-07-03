@@ -4,9 +4,11 @@ import ast.ASTNode
 import sca.StaticCodeAnalyzerRules
 import sca.StaticCodeIssue
 
-interface StaticCodeAnalyzer {
-    fun analyzeNode(
+class SimpleAssignationAnalyzer : StaticCodeAnalyzer {
+    override fun analyzeNode(
         astNode: ASTNode,
         rules: StaticCodeAnalyzerRules,
-    ): List<StaticCodeIssue>
+    ): List<StaticCodeIssue> {
+        return emptyList()
+    }
 }
