@@ -921,7 +921,7 @@ class InterpreterTest {
             )
         val result = interpreter.interpretAST(conditionalNode)
         assertTrue(result is ErrorResponse)
-        assertEquals("Invalid type of ASTNode: Conditional", (result as ErrorResponse).message)
+        assertEquals("Unsupported ASTNode: Conditional", (result as ErrorResponse).message)
     }
 
     @Test

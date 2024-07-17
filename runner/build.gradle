@@ -1,13 +1,15 @@
 plugins {
     id 'common-conventions'
+
 }
-
 dependencies {
-    implementation project(":token")
+    // Depende del Token y del AST
     implementation project(":ast")
-
-    implementation 'org.yaml:snakeyaml:2.2'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation project(":lexer")
+    implementation project(":parser")
+    implementation project(":interpreter")
+    implementation project(":formatter")
+    implementation project(":static_code_analyzer")
 }
 
 publishing {
@@ -26,8 +28,9 @@ publishing {
             from components.kotlin
 
             groupId = 'printscript'
-            artifactId = 'static-code-analyzer'
+            artifactId = 'runner'
             version = '1.0.8'
         }
     }
 }
+

@@ -8,9 +8,7 @@ import interpreter.response.ErrorResponse
 import interpreter.response.InterpreterResponse
 import interpreter.response.SuccessResponse
 
-class ConditionalInterpreter : Interpreter<Conditional> {
-    private val valueInterpreter = ValueInterpreter()
-
+class ConditionalInterpreter(private val valueInterpreter: ValueInterpreter) : Interpreter<Conditional> {
     override fun interpret(
         astNode: Conditional,
         variableManager: VariableManager,
