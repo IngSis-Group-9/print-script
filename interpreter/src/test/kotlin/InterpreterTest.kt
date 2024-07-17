@@ -711,6 +711,29 @@ class InterpreterTest {
     }
 
     @Test
+    fun `test 035 - Conditional statement false without else body`() {
+        val ast =
+            listOf(
+                DeclarationAssignation(
+                    Declaration("x", "boolean"),
+                    BooleanOperator("false"),
+                    false,
+                ),
+                Conditional(
+                    IdentifierOperator("x"),
+                    listOf(
+                        Method("println", StringOperator("true")),
+                    ),
+                    null,
+                ),
+            )
+        val result = interpreter.interpretAST(ast)
+        assertTrue(result is SuccessResponse)
+        result as SuccessResponse
+        assertEquals(null, result.message)
+    }
+
+    @Test
     fun `test 036 - when define variable in if statement to not appear out of scope`() {
         val ast =
             listOf(
