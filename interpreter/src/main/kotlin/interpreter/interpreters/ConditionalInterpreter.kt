@@ -6,6 +6,7 @@ import interpreter.ExecuteInterpreter
 import interpreter.VariableManager
 import interpreter.response.ErrorResponse
 import interpreter.response.InterpreterResponse
+import interpreter.response.SuccessResponse
 
 class ConditionalInterpreter : Interpreter<Conditional> {
     private val valueInterpreter = ValueInterpreter()
@@ -28,7 +29,7 @@ class ConditionalInterpreter : Interpreter<Conditional> {
                     variableManager.removeScope()
                     return response
                 }
-                return ErrorResponse("Missing otherwise block")
+                return SuccessResponse(null)
             }
         } catch (e: Exception) {
             return ErrorResponse(e.message ?: "Error while interpreting condition")
