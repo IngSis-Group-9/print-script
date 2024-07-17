@@ -1,5 +1,15 @@
 plugins {
     id 'common-conventions'
+
+}
+dependencies {
+    // Depende del Token y del AST
+    implementation project(":ast")
+    implementation project(":lexer")
+    implementation project(":parser")
+    implementation project(":interpreter")
+    implementation project(":formatter")
+    implementation project(":static_code_analyzer")
 }
 
 publishing {
@@ -18,8 +28,9 @@ publishing {
             from components.kotlin
 
             groupId = 'printscript'
-            artifactId = 'token'
+            artifactId = 'runner'
             version = '1.0.7'
         }
     }
 }
+
