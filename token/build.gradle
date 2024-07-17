@@ -1,4 +1,5 @@
-plugins {id 'common-conventions'
+plugins {
+    id 'common-conventions'
 }
 
 publishing {
@@ -18,7 +19,7 @@ publishing {
 
             groupId = 'printscript'
             artifactId = 'token'
-            version = '1.0.7-SNAPSHOT'
+            version = '1.0.8'
         }
     }
 }

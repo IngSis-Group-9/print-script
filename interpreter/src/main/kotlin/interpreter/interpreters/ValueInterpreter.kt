@@ -8,9 +8,11 @@ import ast.NumberOperator
 import ast.StringOperator
 import ast.ValueNode
 import interpreter.VariableManager
+import interpreter.inputs.ReadEnvSource
+import interpreter.inputs.ReadInputSource
 import interpreter.response.VariableResponse
 
-class ValueInterpreter : Interpreter<ValueNode> {
+class ValueInterpreter(private val readInputSource: ReadInputSource, private val readEnvSource: ReadEnvSource) : Interpreter<ValueNode> {
     override fun interpret(
         astNode: ValueNode,
         variableManager: VariableManager,
@@ -29,7 +31,7 @@ class ValueInterpreter : Interpreter<ValueNode> {
                         val argument =
                             (astNode.value as? StringOperator)?.value
                                 ?: throw IllegalArgumentException("readEnv requires a string argument")
-                        val value = System.getenv(argument) ?: throw IllegalArgumentException("Environment variable $argument does not exist")
+                        val value = readEnvSource.readEnv(argument) ?: throw IllegalArgumentException("Environment variable $argument does not exist")
                         val type =
                             when {
                                 value.toBooleanStrictOrNull() != null -> "Boolean"
@@ -42,8 +44,7 @@ class ValueInterpreter : Interpreter<ValueNode> {
                         val argument =
                             (astNode.value as? StringOperator)?.value
                                 ?: throw IllegalArgumentException("readInput requires a string argument")
-                        println(argument) // Print the prompt
-                        val value = readLine() ?: throw IllegalArgumentException("Failed to read input")
+                        val value = readInputSource.readInput(argument) ?: throw IllegalArgumentException("Failed to read input")
                         val type =
                             when {
                                 value.toBooleanStrictOrNull() != null -> "Boolean"

@@ -6,6 +6,8 @@ sealed interface Assignation : ASTNode
 
 sealed interface ValueNode : ASTNode
 
+data class UnhandledNode(val boolean: Boolean) : ASTNode
+
 // let x: number;
 data class Declaration(val identifier: String, val type: String) : ASTNode
 

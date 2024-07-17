@@ -1,4 +1,4 @@
-package lexer
+package lexer.tokenMakers
 
 import token.Token
 

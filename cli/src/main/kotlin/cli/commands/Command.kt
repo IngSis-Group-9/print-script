@@ -51,6 +51,8 @@ interface Command {
                             }
                         }
                         astList.add(it)
+                    } ?: run {
+                        throw IllegalArgumentException("Error: Invalid syntax in tokens: $tokens")
                     }
                 }
             }

@@ -4,7 +4,6 @@ import lexer.Lexer
 import lexer.TokenProvider
 import parser.Parser
 import sca.ExecuteSca
-import sca.ScaFactory
 import sca.StaticCodeAnalyzerRules
 import sca.StaticCodeIssue
 import java.io.File
@@ -18,10 +17,10 @@ class AnalyzeCommand(private val file: File, private val configFilePath: String,
         val tokenProvider = TokenProvider(FileInputStream(file), lexer)
         val astList = fillAstListWithProgress(file, parser, tokenProvider)
 
-        val sca = ExecuteSca()
+        val sca = ExecuteSca.getDefaultSCA()
         val scaIssues: MutableList<StaticCodeIssue> = mutableListOf()
         for (ast in astList) {
-            scaIssues += sca.analyzeNode(ast, StaticCodeAnalyzerRules(configFilePath), ScaFactory().assignAnalyzers())
+            scaIssues += sca.analyzeNode(ast, StaticCodeAnalyzerRules(configFilePath))
         }
 
         if (scaIssues.isNotEmpty()) {

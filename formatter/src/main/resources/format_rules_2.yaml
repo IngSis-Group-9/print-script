@@ -1,0 +1,6 @@
+rules:
+    spaceBeforeColon: false
+    spaceAfterColon: true
+    spaceAroundAssignment: true
+    newlineBeforePrintln: 1
+    nSpacesIndentationForIfStatement: 1

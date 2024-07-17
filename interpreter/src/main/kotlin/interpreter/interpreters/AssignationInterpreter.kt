@@ -8,9 +8,7 @@ import interpreter.response.ErrorResponse
 import interpreter.response.InterpreterResponse
 import interpreter.response.SuccessResponse
 
-class AssignationInterpreter : Interpreter<Assignation> {
-    private val valueInterpreter = ValueInterpreter()
-
+class AssignationInterpreter(private val valueInterpreter: ValueInterpreter) : Interpreter<Assignation> {
     override fun interpret(
         astNode: Assignation,
         variableManager: VariableManager,

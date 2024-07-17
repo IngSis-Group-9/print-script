@@ -3,13 +3,11 @@ package formatter.formatters
 import ast.ASTNode
 import ast.DeclarationAssignation
 import formatter.FormatRules
-import kotlin.reflect.KClass
 
 class DeclarationAssignationFormatter : Formatter {
     override fun formatNode(
         astNode: ASTNode,
         rules: FormatRules,
-        formatterList: Map<KClass<out ASTNode>, Formatter>,
     ): String {
         val declarationAssignation = astNode as DeclarationAssignation
         return buildString {
@@ -20,7 +18,7 @@ class DeclarationAssignationFormatter : Formatter {
                     "let "
                 },
             )
-            append(DeclarationFormatter().formatNode(declarationAssignation.declaration, rules, formatterList).drop(4).dropLast(2))
+            append(DeclarationFormatter().formatNode(declarationAssignation.declaration, rules).drop(4).dropLast(2))
             append(
                 if (rules.spaceAroundAssignment) {
                     " = "
@@ -28,7 +26,7 @@ class DeclarationAssignationFormatter : Formatter {
                     "="
                 },
             )
-            append(AssignationValueFormatter().formatNode(declarationAssignation.value, rules, formatterList))
+            append(AssignationValueFormatter().formatNode(declarationAssignation.value, rules))
             append(";\n")
         }
     }

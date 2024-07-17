@@ -3,13 +3,11 @@ package formatter.formatters
 import ast.ASTNode
 import ast.SimpleAssignation
 import formatter.FormatRules
-import kotlin.reflect.KClass
 
 class SimpleAssignationFormatter : Formatter {
     override fun formatNode(
         astNode: ASTNode,
         rules: FormatRules,
-        formatterList: Map<KClass<out ASTNode>, Formatter>,
     ): String {
         val simpleAssignation = astNode as SimpleAssignation
         return buildString {
@@ -21,7 +19,7 @@ class SimpleAssignationFormatter : Formatter {
                     "=" // No space around assignation
                 },
             )
-            append(AssignationValueFormatter().formatNode(simpleAssignation.value, rules, formatterList))
+            append(AssignationValueFormatter().formatNode(simpleAssignation.value, rules))
             append(";\n")
         }
     }

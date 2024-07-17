@@ -10,13 +10,11 @@ import ast.ValueNode
 import sca.StaticCodeAnalyzerRules
 import sca.StaticCodeIssue
 import token.Position
-import kotlin.reflect.KClass
 
 class MethodAnalyzer : StaticCodeAnalyzer {
     override fun analyzeNode(
         astNode: ASTNode,
         rules: StaticCodeAnalyzerRules,
-        scaList: Map<KClass<out ASTNode>, StaticCodeAnalyzer>,
     ): List<StaticCodeIssue> {
         val methodNode = astNode as Method
         val issues = mutableListOf<StaticCodeIssue>()

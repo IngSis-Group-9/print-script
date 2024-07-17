@@ -6,9 +6,7 @@ import interpreter.response.ErrorResponse
 import interpreter.response.InterpreterResponse
 import interpreter.response.SuccessResponse
 
-class MethodInterpreter : Interpreter<Method> {
-    private val valueInterpreter = ValueInterpreter()
-
+class MethodInterpreter(private val valueInterpreter: ValueInterpreter) : Interpreter<Method> {
     override fun interpret(
         astNode: Method,
         variableManager: VariableManager,

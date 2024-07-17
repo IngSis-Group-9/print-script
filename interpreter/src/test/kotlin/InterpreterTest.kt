@@ -1,3 +1,4 @@
+import ast.ASTNode
 import ast.BinaryOperation
 import ast.BooleanOperator
 import ast.Conditional
@@ -890,6 +891,62 @@ class InterpreterTest {
         val result = interpreter.interpretAST(ast)
         assertTrue(result is ErrorResponse)
         result as ErrorResponse
+    }
+
+    @Test
+    fun `test 042 - get interpreter version 1_0`() {
+        val interpreter = ExecuteInterpreter.getInterpreterByVersion("1.0")
+        val astNode: List<ASTNode> =
+            listOf(
+                DeclarationAssignation(
+                    Declaration("x", "number"),
+                    NumberOperator(5),
+                    false,
+                ),
+                Method("println", IdentifierOperator("x")),
+                Declaration("y", "number"),
+            )
+        assertTrue(interpreter.interpretAST(astNode) is SuccessResponse)
+        val conditionalNode =
+            listOf(
+                Conditional(
+                    BooleanOperator("true"),
+                    listOf(
+                        Method("println", StringOperator("true")),
+                    ),
+                    listOf(
+                        Method("println", StringOperator("false")),
+                    ),
+                ),
+            )
+        val result = interpreter.interpretAST(conditionalNode)
+        assertTrue(result is ErrorResponse)
+        assertEquals("Unsupported ASTNode: Conditional", (result as ErrorResponse).message)
+    }
+
+    @Test
+    fun `test 042 - get interpreter version 1_1`() {
+        val interpreter = ExecuteInterpreter.getInterpreterByVersion("1.1")
+        val astNode: List<ASTNode> =
+            listOf(
+                DeclarationAssignation(
+                    Declaration("x", "number"),
+                    NumberOperator(5),
+                    false,
+                ),
+                Method("println", IdentifierOperator("x")),
+                Declaration("y", "number"),
+                Conditional(
+                    BooleanOperator("true"),
+                    listOf(
+                        Method("println", StringOperator("true")),
+                    ),
+                    listOf(
+                        Method("println", StringOperator("false")),
+                    ),
+                ),
+            )
+        assertTrue(interpreter.interpretAST(astNode) is SuccessResponse)
     }
 //    @Test
 //    fun `test 033 - should throw exception for unexpected binary operation node`() {
